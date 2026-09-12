@@ -1,0 +1,210 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Crear Cuenta | Capital Biker{% endblock %}
+
+
+
+{% block content %}
+
+<section class="registro-page">
+
+    <!-- BANNER IZQUIERDO -->
+
+    <div class="registro-banner">
+
+        <div class="banner-contenido">
+
+            <span>CAPITAL BIKER</span>
+
+            <h1>Únete a la comunidad biker.</h1>
+
+            <p>
+                Crea tu cuenta y disfruta accesorios,
+                beneficios exclusivos y una experiencia
+                pensada para motociclistas.
+            </p>
+
+        </div>
+
+    </div>
+
+    <!-- FORMULARIO -->
+
+    <div class="registro-formulario">
+
+        <div class="registro-card">
+
+            <img src="{% static 'IMAGENES/Logo/capital-biker-logo.png' %}"
+                 class="logo-registro"
+                 alt="Capital Biker">
+
+            <h2>Crear cuenta</h2>
+
+            <p class="descripcion">
+                Regístrate para acceder a tus pedidos,
+                favoritos y promociones.
+            </p>
+
+            <form method="POST">
+
+                {% csrf_token %}
+
+                <div class="grupo">
+
+                    <label>Nombre completo</label>
+
+                    <input
+                        type="text"
+                        name="nombre"
+                        placeholder="Tu nombre completo"
+                        required>
+
+                </div>
+
+                <div class="grupo">
+
+                    <label>Correo electrónico</label>
+
+                    <input
+                        type="email"
+                        name="email"
+                        placeholder="correo@ejemplo.com"
+                        required>
+
+                </div>
+
+                <div class="grupo">
+
+                    <label>Contraseña</label>
+
+                    <input
+                        type="password"
+                        name="password1"
+                        placeholder="********"
+                        required>
+
+                </div>
+
+                <div class="grupo">
+
+                    <label>Confirmar contraseña</label>
+
+                    <input
+                        type="password"
+                        name="password2"
+                        placeholder="********"
+                        required>
+
+                </div>
+
+                <div class="terminos">
+
+                    <label>
+
+                        <input type="checkbox" required>
+
+                        Acepto términos y condiciones
+
+                    </label>
+
+                </div>
+
+                <button
+                    type="submit"
+                    class="btn-registro">
+
+                    Crear cuenta
+
+                </button>
+
+            </form>
+
+            <div class="separador">
+
+                <span>O continúa con</span>
+
+            </div>
+
+            <button class="google-btn">
+
+                <img src="{% static 'IMAGENES/icons/google-icon.png' %}"
+                     alt="Google">
+
+                <span>
+
+                    Registrarse con Google
+
+                </span>
+
+            </button>
+
+            <div class="login">
+
+                ¿Ya tienes una cuenta?
+
+                <a href="{% url 'usuarios:login' %}">
+
+                    Ingresar
+
+                </a>
+
+            </div>
+
+            <div class="volver">
+
+                <a href="{% url 'home' %}">
+
+                    <i class="fa-solid fa-arrow-left"></i>
+
+                    Volver al inicio
+
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<script>
+
+function mostrarPassword(id){
+
+let campo = document.getElementById(id);
+
+if(campo.type === "password"){
+    campo.type = "text";
+}
+else{
+    campo.type = "password";
+}
+
+}
+
+
+document.getElementById("registroForm").addEventListener("submit", function(e){
+
+let pass1 = document.getElementById("password").value;
+let pass2 = document.getElementById("password2").value;
+
+
+if(pass1 !== pass2){
+
+    e.preventDefault();
+
+    alert("Las contraseñas no coinciden");
+
+}
+
+});
+
+
+</script>
+
+
+{% endblock %}
+

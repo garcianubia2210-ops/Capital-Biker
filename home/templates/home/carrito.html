@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Carrito
+{% endblock %}
+
+{% block content %}
+
+<div class="container py-5">
+
+<h2 class="mb-4">
+
+🛒 Mi Carrito
+
+</h2>
+
+<div class="alert alert-warning">
+
+Tu carrito está vacío.
+
+</div>
+
+<a href="{% url 'catalogo:lista' %}" class="btn btn-warning">
+
+Seguir comprando
+
+</a>
+
+</div>
+
+{% endblock %}

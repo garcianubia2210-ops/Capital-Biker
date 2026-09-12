@@ -1,0 +1,105 @@
+{% extends "base.html" %}
+{% load static %}
+{% load formato_moneda %}
+
+{% block title %}
+Compra confirmada
+{% endblock %}
+
+{% block content %}
+
+<link rel="stylesheet" href="{% static 'css/styles.css' %}">
+
+<section class="confirmacion-page">
+
+    <div class="confirmacion-card">
+
+        <!-- ICONO DE CONFIRMACIÓN -->
+        <div class="confirmacion-icono">
+            ✓
+        </div>
+
+        <!-- TÍTULO -->
+        <h1>
+            ¡Compra realizada correctamente!
+        </h1>
+
+        <p class="confirmacion-mensaje">
+            Gracias por comprar en <strong>Capital Biker</strong>.
+            Tu pedido ha sido registrado correctamente.
+        </p>
+
+
+        <!-- INFORMACIÓN DEL PEDIDO -->
+        <div class="pedido-info">
+
+            <div class="pedido-fila">
+
+                <div class="pedido-dato">
+                    <span>Número de pedido</span>
+                    <strong>
+                        #{{ pedido.id }}
+                    </strong>
+                </div>
+
+                <div class="pedido-dato">
+                    <span>Cliente</span>
+                    <strong>
+                        {{ pedido.nombre }}
+                    </strong>
+                </div>
+
+            </div>
+
+
+            <div class="pedido-fila">
+
+                <div class="pedido-dato">
+                    <span>Método de pago</span>
+                    <strong>
+                        {{ pedido.get_metodo_pago_display }}
+                    </strong>
+                </div>
+
+                <div class="pedido-dato pedido-dato-total">
+                    <span>Total</span>
+                    <strong>
+                        {{ pedido.total|moneda }}
+                    </strong>
+                </div>
+
+            </div>
+
+
+            <div class="pedido-fila">
+
+                <div class="pedido-dato">
+                    <span>Estado</span>
+                    <strong class="estado-confirmado">
+                        {{ pedido.get_estado_display }}
+                    </strong>
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- BOTÓN -->
+        <div class="confirmacion-acciones">
+
+            <a
+                href="{% url 'catalogo:lista' %}"
+                class="btn-naranja"
+            >
+                🏍️ Seguir comprando
+            </a>
+
+        </div>
+
+    </div>
+
+</section>
+
+{% endblock %}
+

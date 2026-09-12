@@ -1,0 +1,149 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+Iniciar Sesión | Capital Biker
+{% endblock %}
+
+{% block content %}
+
+<section class="login-page">
+
+    <!-- BANNER -->
+
+    <div class="login-banner">
+
+        <div class="banner-contenido">
+
+            <span>CAPITAL BIKER</span>
+
+            <h1>
+                Tu próxima aventura comienza aquí.
+            </h1>
+
+            <p>
+                Descubre los mejores accesorios para motociclistas.
+                Seguridad, calidad y estilo para cada kilómetro.
+            </p>
+
+        </div>
+
+    </div>
+
+    <!-- FORMULARIO -->
+
+    <div class="login-formulario">
+
+        <div class="login-card">
+
+            <img src="{% static 'IMAGENES/Logo/capital-biker-logo.png' %}"
+                 class="logo-login"
+                 alt="Capital Biker">
+
+            <h2>Iniciar Sesión</h2>
+
+            <p class="descripcion">
+                Ingresa para acceder a tus pedidos,
+                favoritos y promociones exclusivas.
+            </p>
+
+            <form method="POST">
+
+                {% csrf_token %}
+
+                <div class="grupo">
+
+                    <label>Usuario</label>
+
+                    <input
+                        type="text"
+                        name="username"
+                        placeholder="Tu usuario"
+                        required>
+
+                </div>
+
+                <div class="grupo">
+
+                    <label>Contraseña</label>
+
+                    <input
+                        type="password"
+                        name="password"
+                        placeholder="********"
+                        required>
+
+                </div>
+
+                <div class="opciones">
+
+                    <label>
+
+                        <input type="checkbox">
+
+                        Recordarme
+
+                    </label>
+
+                    <a href="#">
+                        ¿Olvidaste tu contraseña?
+                    </a>
+
+                </div>
+
+                <button
+                    type="submit"
+                    class="btn-login">
+
+                    Ingresar
+
+                </button>
+
+            </form>
+
+            <div class="separador">
+
+                <span>O continúa con</span>
+
+            </div>
+
+            <button class="google-btn">
+
+                <img src="{% static 'IMAGENES/icons/google-icon.png' %}"
+                     alt="Google">
+
+                <span>
+                    Iniciar sesión con Google
+                </span>
+
+            </button>
+
+            <div class="registro">
+
+                ¿No tienes una cuenta?
+
+                <a href="{% url 'usuarios:registro' %}">
+                    Crear cuenta
+                </a>
+
+            </div>
+
+            <div class="volver">
+
+                <a href="{% url 'home' %}">
+
+                    <i class="fa-solid fa-arrow-left"></i>
+
+                    Volver al inicio
+
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+{% endblock %}

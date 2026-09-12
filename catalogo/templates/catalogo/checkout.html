@@ -1,0 +1,333 @@
+{% extends "base.html" %}
+{% load static %}
+{% load formato_moneda %}
+
+{% block title %}
+Finalizar compra
+{% endblock %}
+
+{% block content %}
+
+<div class="checkout-page">
+
+    <!-- TÍTULO -->
+    <div class="checkout-header">
+
+        <h2>
+            Finalizar compra 🏍️
+        </h2>
+
+        <p>
+            Completa tus datos para registrar tu pedido.
+        </p>
+
+    </div>
+
+
+    <div class="checkout-contenedor">
+
+
+        <!-- ==========================================
+                RESUMEN DEL PEDIDO
+        =========================================== -->
+
+        <div class="checkout-card checkout-resumen">
+
+            <div class="checkout-card-header">
+
+                <span class="checkout-icono">
+                    🛒
+                </span>
+
+                <div>
+                    <h4>
+                        Resumen de tu pedido
+                    </h4>
+
+                    <p>
+                        Revisa los productos antes de confirmar.
+                    </p>
+                </div>
+
+            </div>
+
+
+            <!-- PRODUCTOS -->
+
+            <div class="checkout-productos">
+
+                {% for item in carrito.items.all %}
+
+                <div class="checkout-producto">
+
+                    <!-- INFORMACIÓN DEL PRODUCTO -->
+
+                    <div class="checkout-producto-info">
+
+                        <h5>
+                            {{ item.variante.producto.nombre }}
+                        </h5>
+
+
+                        <div class="checkout-detalles">
+
+                            <span>
+                                Cantidad:
+                                <strong>
+                                    {{ item.cantidad }}
+                                </strong>
+                            </span>
+
+
+                            {% if item.variante.color %}
+
+                            <span>
+                                Color:
+                                <strong>
+                                    {{ item.variante.color.nombre }}
+                                </strong>
+                            </span>
+
+                            {% endif %}
+
+
+                            {% if item.variante.talla %}
+
+                            <span>
+                                Talla:
+                                <strong>
+                                    {{ item.variante.talla.nombre }}
+                                </strong>
+                            </span>
+
+                            {% endif %}
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- PRECIO -->
+
+                    <div class="checkout-precio">
+
+                        {{ item.subtotal|moneda }}
+
+                    </div>
+
+                </div>
+
+                {% empty %}
+
+                <div class="checkout-vacio">
+
+                    <p>
+                        Tu carrito está vacío.
+                    </p>
+
+                </div>
+
+                {% endfor %}
+
+            </div>
+
+
+            <!-- TOTAL -->
+
+            <div class="checkout-total">
+
+                <span>
+                    Total de la compra
+                </span>
+
+                <strong>
+                    {{ total|moneda }}
+                </strong>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- ==========================================
+                DATOS DEL CLIENTE
+        =========================================== -->
+
+        <div class="checkout-card checkout-form-card">
+
+            <div class="checkout-card-header">
+
+                <span class="checkout-icono">
+                    👤
+                </span>
+
+                <div>
+
+                    <h4>
+                        Datos del cliente
+                    </h4>
+
+                    <p>
+                        Información para realizar la entrega.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <form method="POST">
+
+                {% csrf_token %}
+
+
+                <!-- FILA 1 -->
+
+                <div class="checkout-fila">
+
+                    <div class="checkout-campo">
+
+                        <label for="nombre">
+                            Nombre completo
+                        </label>
+
+                        <input
+                            type="text"
+                            id="nombre"
+                            name="nombre"
+                            placeholder="Ingresa tu nombre completo"
+                            required
+                        >
+
+                    </div>
+
+
+                    <div class="checkout-campo">
+
+                        <label for="telefono">
+                            Teléfono
+                        </label>
+
+                        <input
+                            type="tel"
+                            id="telefono"
+                            name="telefono"
+                            placeholder="Ej: 300 123 4567"
+                            required
+                        >
+
+                    </div>
+
+                </div>
+
+
+                <!-- FILA 2 -->
+
+                <div class="checkout-fila">
+
+                    <div class="checkout-campo">
+
+                        <label for="correo">
+                            Correo electrónico
+                        </label>
+
+                        <input
+                            type="email"
+                            id="correo"
+                            name="correo"
+                            placeholder="correo@ejemplo.com"
+                            required
+                        >
+
+                    </div>
+
+
+                    <div class="checkout-campo">
+
+                        <label for="metodo_pago">
+                            💳 Método de pago
+                        </label>
+
+                        <select
+                            id="metodo_pago"
+                            name="metodo_pago"
+                            required
+                        >
+
+                            <option value="">
+                                Selecciona un método
+                            </option>
+
+                            <option value="efectivo">
+                                💵 Efectivo contra entrega
+                            </option>
+
+                            <option value="transferencia">
+                                🏦 Transferencia bancaria
+                            </option>
+
+                        </select>
+
+                    </div>
+
+                </div>
+
+
+                <!-- DIRECCIÓN -->
+
+                <div class="checkout-campo checkout-campo-completo">
+
+                    <label for="direccion">
+                        🏠 Dirección de entrega
+                    </label>
+
+                    <textarea
+                        id="direccion"
+                        name="direccion"
+                        rows="4"
+                        placeholder="Escribe la dirección donde deseas recibir tu pedido"
+                        required
+                    ></textarea>
+
+                </div>
+
+
+                <!-- INFORMACIÓN -->
+
+                <div class="checkout-nota">
+
+                    <span>
+                        🔒
+                    </span>
+
+                    <p>
+                        Tus datos serán utilizados únicamente
+                        para gestionar y entregar tu pedido.
+                    </p>
+
+                </div>
+
+
+                <!-- BOTÓN -->
+
+                <div class="checkout-acciones">
+
+                    <button
+                        type="submit"
+                        class="checkout-btn"
+                    >
+                        Confirmar compra 🛒
+                    </button>
+
+                </div>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

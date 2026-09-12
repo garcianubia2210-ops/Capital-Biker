@@ -1,0 +1,407 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+Productos | Capital Biker | Tienda Oficial
+{% endblock %}
+
+{% block content %}
+
+<!-- ================= HERO PRODUCTOS ================= -->
+
+<section class="hero-productos">
+
+    <div class="overlay"></div>
+
+    <div class="contenido-hero">
+
+        <span class="subtitulo">
+            EQUIPAMIENTO PREMIUM
+        </span>
+
+        <h1>
+            TODO PARA TU
+            <span>PRÓXIMA RUTA</span>
+        </h1>
+
+        <p>
+            Accesorios para motociclistas que buscan
+            seguridad, calidad y estilo en cada recorrido.
+        </p>
+
+        <div class="hero-botones">
+
+            <a href="#cascos" class="btn-principal">
+                Explorar catálogo
+            </a>
+
+            <a href="https://wa.me/573001234567"
+               target="_blank"
+               class="btn-secundario">
+
+                Hablar con asesor
+
+            </a>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ================= BUSCADOR ================= -->
+
+<section class="barra-productos">
+
+    <div class="busqueda">
+
+        <i class="fa-solid fa-magnifying-glass"></i>
+
+        <input
+            type="text"
+            id="buscar"
+            placeholder="Buscar accesorios..."
+        >
+
+    </div>
+
+    <div class="resultado">
+
+        <p>
+            Más de 120 productos disponibles
+        </p>
+
+    </div>
+
+</section>
+
+
+<!-- ================= CATEGORÍAS ================= -->
+
+<section class="menu-categorias">
+
+    <a href="#cascos">
+
+        <i class="fa-solid fa-motorcycle"></i>
+
+        Cascos
+
+    </a>
+
+
+    <a href="#chaquetas">
+
+        <i class="fa-solid fa-shirt"></i>
+
+        <span>Chaquetas</span>
+
+    </a>
+
+
+    <a href="#guantes">
+
+        <i class="fa-solid fa-hand"></i>
+
+        <span>Guantes</span>
+
+    </a>
+
+
+    <a href="#botas">
+
+        <i class="fa-solid fa-shoe-prints"></i>
+
+        <span>Botas</span>
+
+    </a>
+
+
+    <a href="#accesorios">
+
+        <i class="fa-solid fa-toolbox"></i>
+
+        <span>Accesorios</span>
+
+    </a>
+
+</section>
+
+
+
+<!-- ==================================================
+                CATEGORÍAS Y PRODUCTOS
+=================================================== -->
+
+{% for categoria in categorias %}
+
+<section
+    id="{{ categoria.slug }}"
+    class="categoria-productos"
+>
+
+
+    <!-- ================= TÍTULO CATEGORÍA ================= -->
+
+    <div class="titulo-categoria">
+
+        <span>
+            COLECCIÓN CAPITAL BIKER
+        </span>
+
+        <h2>
+            {{ categoria.nombre }}
+        </h2>
+
+    </div>
+
+
+
+    <!-- ================= GRID PRODUCTOS ================= -->
+
+    <div class="grid-productos">
+
+
+        {% for producto in categoria.productos.all %}
+
+
+        <!-- ================= TARJETA PRODUCTO ================= -->
+
+        <article class="card-producto">
+
+
+            <!-- ================= IMAGEN ================= -->
+
+            <div class="imagen-producto">
+
+
+                {% if producto.nuevo %}
+
+                <span class="badge nuevo">
+                    Nuevo
+                </span>
+
+                {% endif %}
+
+
+                {% if producto.oferta %}
+
+                <span class="badge oferta">
+                    Oferta
+                </span>
+
+                {% endif %}
+
+
+
+                {% if producto.imagen %}
+
+                <img
+                    src="{{ producto.imagen.url }}"
+                    alt="{{ producto.nombre }}"
+                >
+
+                {% else %}
+
+                <div class="sin-imagen">
+
+                    <span>
+                        Imagen no disponible
+                    </span>
+
+                </div>
+
+                {% endif %}
+
+
+            </div>
+
+
+
+            <!-- ================= INFORMACIÓN ================= -->
+
+            <div class="info-producto">
+
+
+                <!-- MARCA -->
+
+                <span class="marca">
+
+                    {{ producto.marca }}
+
+                </span>
+
+
+
+                <!-- NOMBRE -->
+
+                <h3>
+
+                    {{ producto.nombre }}
+
+                </h3>
+
+
+
+                <!-- CALIFICACIÓN -->
+
+                <div class="rating">
+
+                    ★★★★★
+
+                    <small>
+
+                        ({{ producto.opiniones }} opiniones)
+
+                    </small>
+
+                </div>
+
+
+
+                <!-- DESCRIPCIÓN CORTA -->
+
+                <p class="descripcion">
+
+                    {{ producto.descripcion|truncatechars:110 }}
+
+                </p>
+
+
+
+                <!-- PRECIO -->
+
+                <div class="precio">
+
+
+                    {% if producto.precio_anterior %}
+
+                    <span class="antes">
+
+                        ${{ producto.precio_anterior }}
+
+                    </span>
+
+                    {% endif %}
+
+
+                    <span class="ahora">
+
+                        ${{ producto.precio }}
+
+                    </span>
+
+
+                </div>
+
+
+
+                <!-- INFORMACIÓN EXTRA -->
+
+                <div class="extras">
+
+
+                    {% if producto.envio_gratis %}
+
+                    <span>
+
+                        Envío gratis
+
+                    </span>
+
+                    {% endif %}
+
+
+
+                    {% if producto.disponible %}
+
+                    <span>
+
+                        Disponible
+
+                    </span>
+
+                    {% else %}
+
+                    <span>
+
+                        Agotado
+
+                    </span>
+
+                    {% endif %}
+
+
+                </div>
+
+
+
+                <!-- ================= BOTONES ================= -->
+
+                <div class="botones">
+
+
+                    <!-- VER DETALLE -->
+
+                    <a
+                        href="{% url 'catalogo:detalle' producto.pk %}"
+                        class="btn-detalle"
+                    >
+
+                        Ver detalle
+
+                    </a>
+
+
+
+                    <!-- AGREGAR -->
+
+                    <a
+                        href="{% url 'catalogo:detalle' producto.pk %}"
+                        class="btn-agregar"
+                    >
+
+                        🛒 Agregar
+
+                    </a>
+
+
+                </div>
+
+
+            </div>
+
+        </article>
+
+
+        <!-- ================= FIN TARJETA ================= -->
+
+
+        {% empty %}
+
+
+        <div class="sin-productos">
+
+            <h4>
+                No hay productos registrados.
+            </h4>
+
+            <p>
+                Próximamente encontrarás nuevos productos
+                para tu próxima ruta.
+            </p>
+
+        </div>
+
+
+        {% endfor %}
+
+
+    </div>
+
+</section>
+
+
+{% endfor %}
+
+{% endblock %}

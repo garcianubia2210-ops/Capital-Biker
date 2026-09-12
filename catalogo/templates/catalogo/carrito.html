@@ -1,0 +1,212 @@
+
+{% extends "base.html" %}
+
+{% load static %}
+
+{% load formato_moneda %}
+
+{% block title %}
+Carrito
+{% endblock %}
+
+{% block content %}
+
+<!-- CSS DEL CARRITO -->
+
+<link rel="stylesheet" href="{% static 'css/styles.css' %}">
+
+<section class="container py-5 carrito-page">
+
+```
+<!-- TÍTULO -->
+<div class="carrito-titulo">
+    <h1>
+        🛒 Mi Carrito
+    </h1>
+</div>
+
+
+{% if carrito and carrito.items.all %}
+
+    {% for item in carrito.items.all %}
+
+        <!-- PRODUCTO -->
+        <div class="card carrito-card mb-4 p-3">
+
+            <div class="row align-items-center">
+
+                <!-- IMAGEN -->
+                <div class="col-md-3 carrito-imagen">
+
+                    {% if item.variante.producto.imagen %}
+
+                        <img
+                            src="{{ item.variante.producto.imagen.url }}"
+                            alt="{{ item.variante.producto.nombre }}"
+                            class="img-fluid"
+                        >
+
+                    {% else %}
+
+                        <div class="sin-imagen">
+                            Sin imagen
+                        </div>
+
+                    {% endif %}
+
+                </div>
+
+
+                <!-- INFORMACIÓN DEL PRODUCTO -->
+                <div class="col-md-5 carrito-info">
+
+                    <h3>
+                        {{ item.variante.producto.nombre }}
+                    </h3>
+
+                    <p>
+                        <strong>Marca:</strong>
+                        {{ item.variante.producto.marca }}
+                    </p>
+
+                    <p>
+                        <strong>Color:</strong>
+                        {{ item.variante.color.nombre }}
+                    </p>
+
+                    <p>
+                        <strong>Talla:</strong>
+                        {{ item.variante.talla.nombre }}
+                    </p>
+
+                </div>
+
+
+                <!-- PRECIO Y CANTIDAD -->
+                <div class="col-md-4 carrito-detalles">
+
+                    <!-- PRECIO -->
+                    <p>
+                        <strong>Precio:</strong>
+                       {{ item.variante.producto.precio|moneda }}
+                    </p>
+
+
+                    <!-- CANTIDAD -->
+                    <div class="cantidad-container">
+
+                        <strong>Cantidad:</strong>
+
+                        <div class="cantidad-controles">
+
+                            <!-- DISMINUIR -->
+                            <a
+                                href="{% url 'catalogo:disminuir_cantidad' item.id %}"
+                                class="btn-naranja cantidad-btn"
+                            >
+                                −
+                            </a>
+
+
+                            <!-- CANTIDAD ACTUAL -->
+                            <span class="cantidad-numero">
+                                {{ item.cantidad }}
+                            </span>
+
+
+                            <!-- AUMENTAR -->
+                            <a
+                                href="{% url 'catalogo:aumentar_cantidad' item.id %}"
+                                class="btn-naranja cantidad-btn"
+                            >
+                                +
+                            </a>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- SUBTOTAL -->
+                    <p class="subtotal">
+                        <strong>Subtotal:</strong>
+                        {{ item.subtotal|moneda }}
+                    </p>
+
+
+                    <!-- ELIMINAR -->
+                    <a
+                        href="{% url 'catalogo:eliminar_item' item.id %}"
+                        class="btn-naranja eliminar-btn"
+                    >
+                        🗑️ Eliminar
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    {% endfor %}
+
+
+    <!-- RESUMEN DEL TOTAL -->
+    <div class="carrito-resumen">
+
+        <h2>
+            Total:
+            <span class="total-negro">
+                {{ total|moneda }}
+            </span>
+        </h2>
+
+    </div>
+
+
+    <!-- SEGUIR COMPRANDO -->
+    <div class="carrito-acciones">
+
+       
+<a
+    href="{% url 'catalogo:checkout' %}"
+    class="btn-naranja seguir-comprando"
+>
+    Finalizar compra →
+</a>
+
+    </div>
+
+
+{% else %}
+
+    <!-- CARRITO VACÍO -->
+    <div class="carrito-vacio">
+
+        <div class="carrito-vacio-icono">
+            🛒
+        </div>
+
+        <h2>
+            Tu carrito está vacío
+        </h2>
+
+        <p>
+            Agrega algunos productos para comenzar tu compra.
+        </p>
+
+        <a
+            href="{% url 'catalogo:lista' %}"
+            class="btn-naranja"
+        >
+            Ver productos
+        </a>
+
+    </div>
+
+{% endif %}
+```
+
+</section>
+
+{% endblock %}

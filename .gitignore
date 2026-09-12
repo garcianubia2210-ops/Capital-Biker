@@ -1,0 +1,35 @@
+# Entorno virtual
+.venv/
+venv/
+env/
+
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+
+# Django
+db.sqlite3
+*.log
+
+# Variables de entorno
+.env
+
+# Archivos temporales
+*.tmp
+*.bak
+
+# Sistema operativo
+.DS_Store
+Thumbs.db
+
+# Editores
+.vscode/
+.idea/
+
+# Archivos multimedia locales
+media/
+
+# Archivos descargados accidentalmente junto a imágenes
+static/IMAGENES/Cascos/casco 501.jpng.html
+static/IMAGENES/Cascos/casco 501.jpng_files/

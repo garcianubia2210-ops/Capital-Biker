@@ -1,0 +1,227 @@
+
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+
+    {% block extra_css%}
+    {% endblock %}
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>{% block title %} Capital Biker | Tienda Oficial{% endblock %}</title>
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" 
+integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+
+<link rel="stylesheet" href="{% static 'CSS/styles.css' %}">
+
+</head>
+
+<body>
+    
+
+ <nav class="navbar navbar-expand-lg navbar-dark navbar-custom fixed-top">
+
+    <div class="container">
+
+        <a class="navbar-brand fw-bold" href="{% url 'home' %}">
+
+           <img src="{% static 'IMAGENES/Logo/capital-biker-logo.png' %}"
+               class="logo-navbar"
+                    alt="Capital Biker">
+
+            Capital Biker
+
+        </a>
+
+        <button class="navbar-toggler"
+                type="button"
+                data-bs-toggle="collapse"
+                data-bs-target="#menu">
+
+            <span class="navbar-toggler-icon"></span>
+
+        </button>
+
+        <div class="collapse navbar-collapse" id="menu">
+
+            <ul class="navbar-nav ms-auto align-items-center">
+
+                <li class="nav-item">
+
+                    <a class="nav-link" href="{% url 'home' %}">
+
+                        Inicio
+
+                    </a>
+
+                </li>
+
+                <li class="nav-item">
+
+                    <a class="nav-link" href="{% url 'catalogo:lista' %}">
+
+                        Productos
+
+                    </a>
+
+                </li>
+
+                <li class="nav-item">
+
+                    <a class="nav-link" href="{% url 'home' %}#nosotros">
+   
+                        Nosotros
+
+                    </a>
+
+                </li>
+
+                <li class="nav-item">
+
+                    <a class="nav-link" href="{% url 'contacto' %}">
+
+                        Contacto
+
+                    </a>
+
+                </li>
+
+                <li class="nav-item">
+
+                    <a class="nav-link" href="{% url 'catalogo:carrito' %}">
+
+                        <i class="fas fa-shopping-cart"></i>
+
+                    </a>
+
+                </li>
+
+                <li class="nav-item">
+
+                    <a class="nav-link" href="{% url 'usuarios:login' %}">
+
+                        <i class="fas fa-user"></i>
+                        
+                         Ingresar
+
+                    </a>
+
+                </li>
+
+                <li class="nav-item ms-3">
+
+                    <a href="{% url 'usuarios:registro' %}"
+                       class="btn btn-warning rounded-pill px-4">
+
+                        Registrarse
+
+                    </a>
+
+                </li>
+
+            </ul>
+
+        </div>
+
+    </div>
+
+</nav>
+
+
+<main>
+
+{% block content %}
+
+{% endblock %}
+
+</main>
+     
+
+    <!-- ==========================
+     FOOTER
+========================== -->
+<footer class="footer">
+
+<div class="container">
+
+<div class="row">
+
+<div class="col-lg-4">
+
+<h3>Capital Biker</h3>
+
+<p>
+
+Libertad, Seguridad y Estilo en cada Ruta.
+
+</p>
+
+</div>
+
+<div class="col-lg-4">
+
+<h5>Enlaces</h5>
+
+<ul class="list-unstyled">
+
+<li><a href="{% url 'home' %}">Inicio</a></li>
+
+<li><a href="{% url 'catalogo:lista' %}">Productos</a></li>
+
+<li><a href="{% url 'contacto' %}">Contacto</a></li>
+
+</ul>
+
+</div>
+
+<div class="col-lg-4">
+
+<h5>Síguenos</h5>
+
+<div class="redes">
+
+<a href="#"><i class="fab fa-facebook-f"></i></a>
+
+<a href="#"><i class="fab fa-instagram"></i></a>
+
+<a href="#"><i class="fab fa-whatsapp"></i></a>
+
+<a href="#"><i class="fab fa-tiktok"></i></a>
+
+</div>
+
+</div>
+
+</div>
+
+<hr>
+
+<p class="text-center">
+
+© 2026 Capital Biker | Todos los derechos reservados.
+
+</p>
+
+</div>
+
+</footer>
+
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="{% static 'JS/app.js' %}"></script>
+{% block extra_js %}
+
+{% endblock %}
+
+<a href="#" id="btnTop">
+    ↑
+</a>
+</body>
+</html>

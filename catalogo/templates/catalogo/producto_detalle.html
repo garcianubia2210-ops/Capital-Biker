@@ -1,0 +1,170 @@
+
+{% extends "base.html" %}
+
+{% load static %}
+{% load formato_moneda %}
+
+{% block title %}
+{{ producto.nombre }} | Capital Biker
+{% endblock %}
+
+{% block content %}
+
+<!-- Contenedor global adaptado a Bootstrap -->
+<main class="container my-5 pt-4">
+    <section class="row producto-detalle">
+
+        <!-- ==================================================
+             COLUMNA IZQUIERDA: GALERÍA FOTOGRÁFICA MACRO
+        ================================================== -->
+        <div class="col-lg-7 producto-galeria mb-4 mb-lg-0">
+
+            <div class="producto-imagen-principal">
+                {% if producto.imagen %}
+                    <img 
+                        src="{{ producto.imagen.url }}" 
+                        alt="{{ producto.nombre }}"
+                        id="imagenPrincipal"
+                    >
+                {% else %}
+                    <div class="sin-imagen">
+                        <span>🏍️</span>
+                        <p class="m-0">No hay imagen disponible</p>
+                    </div>
+                {% endif %}
+            </div>
+
+            <!-- Mosaico de Miniaturas con interactividad -->
+            <div class="producto-miniaturas">
+                <div class="miniatura activa" onclick="cambiarImagen('{{ producto.imagen.url }}', this)">
+                    {% if producto.imagen %}
+                        <img src="{{ producto.imagen.url }}" alt="{{ producto.nombre }}">
+                    {% else %}
+                        <span>🏍️</span>
+                    {% endif %}
+                </div>
+
+                <!-- Espacios listos para futuras imágenes adicionales -->
+                <div class="miniatura">
+                    <span>＋</span>
+                </div>
+                <div class="miniatura">
+                    <span>＋</span>
+                </div>
+                <div class="miniatura">
+                    <span>＋</span>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- ==================================================
+             COLUMNA DERECHA: PANEL DE INFORMACIÓN PREMIUM
+        ================================================== -->
+        <div class="col-lg-5 producto-info-container">
+
+            <span class="producto-categoria">
+                {{ producto.categoria.nombre }}
+            </span>
+
+            <h1>{{ producto.nombre }}</h1>
+
+            {% if producto.marca %}
+                <p class="producto-marca">
+                    <strong>Marca:</strong> {{ producto.marca }}
+                </p>
+            {% endif %}
+
+            <div class="producto-precio">
+                {{ producto.precio|moneda }}
+            </div>
+
+            <div class="producto-descripcion">
+                <h3>Descripción</h3>
+                <p>{{ producto.descripcion }}</p>
+            </div>
+
+            <div class="producto-separador"></div>
+
+            <!-- FORMULARIO DE COMPRA -->
+            {% if producto.variantes.all %}
+                <form method="post" class="producto-form">
+                    {% csrf_token %}
+
+                    <!-- Selección de Variante (Talla / Color) -->
+                    <div class="producto-campo">
+                        <label for="variante">Selecciona talla y color</label>
+                        <select name="variante" id="variante" required>
+                            <option value="">Selecciona una opción</option>
+                            {% for variante in producto.variantes.all %}
+                                {% if variante.stock > 0 %}
+                                    <option value="{{ variante.id }}">
+                                        {{ variante.color.nombre }} - {{ variante.talla.nombre }} | Stock: {{ variante.stock }}
+                                    </option>
+                                {% endif %}
+                            {% endfor %}
+                        </select>
+                    </div>
+
+                    <!-- Control Numérico de Cantidad -->
+                    <div class="producto-campo">
+                        <label for="cantidad">Cantidad</label>
+                        <div class="cantidad-control">
+                            <button type="button" class="cantidad-btn" onclick="disminuirCantidad()">−</button>
+                            <input 
+                                type="number" 
+                                name="cantidad" 
+                                id="cantidad" 
+                                value="1" 
+                                min="1" 
+                                max="1" 
+                                readonly
+                            >
+                            <button type="button" class="cantidad-btn" onclick="aumentarCantidad()">+</button>
+                        </div>
+                    </div>
+
+                    <!-- Botón Añadir -->
+                    <button type="submit" class="producto-btn btn-warning mt-3">
+                        🛒 Agregar al carrito
+                    </button>
+
+                    <!-- Sellos de Confianza y Seguridad -->
+                    <div class="producto-seguridad">
+                        <div>
+                            <span class="fs-4">🛡️</span>
+                            <span>Compra segura</span>
+                        </div>
+                        <div>
+                            <span class="fs-4">🚚</span>
+                            <span>Envíos disponibles</span>
+                        </div>
+                        <div>
+                            <span class="fs-4">✓</span>
+                            <span>Garantía Oficial</span>
+                        </div>
+                    </div>
+
+                </form>
+            {% else %}
+                <div class="producto-sin-variantes">
+                    <strong>Producto no disponible</strong>
+                    <p class="m-0">Este producto no cuenta con variantes o unidades registradas en este momento.</p>
+                </div>
+            {% endif %}
+
+        </div>
+
+    </section>
+</main>
+
+
+
+<!-- ==================================================
+     ARCHIVO JAVASCRIPT
+================================================== -->
+
+<script src="{% static 'js/script.js' %}"></script>
+
+{% endblock %}
+
