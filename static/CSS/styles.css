@@ -2906,3 +2906,23 @@ section {
     display: block;
     margin-bottom: 5px;
 }
+
+.mensaje-error {
+    background: #ffe5e5;
+    color: #b30000;
+    border: 1px solid #ff4d4d;
+    border-radius: 8px;
+    padding: 12px 15px;
+    margin-bottom: 18px;
+    font-size: 14px;
+}
+
+.mensaje-error p {
+    margin: 0;
+}
+
+.campo-error {
+    color: #b30000;
+    font-size: 13px;
+    margin-top: 5px;
+}

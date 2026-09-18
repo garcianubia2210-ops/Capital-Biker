@@ -1,16 +1,14 @@
+```html
 {% extends 'base.html' %}
 {% load static %}
 
 {% block title %}Crear Cuenta | Capital Biker{% endblock %}
-
-
 
 {% block content %}
 
 <section class="registro-page">
 
     <!-- BANNER IZQUIERDO -->
-
     <div class="registro-banner">
 
         <div class="banner-contenido">
@@ -29,15 +27,17 @@
 
     </div>
 
-    <!-- FORMULARIO -->
 
+    <!-- FORMULARIO -->
     <div class="registro-formulario">
 
         <div class="registro-card">
 
-            <img src="{% static 'IMAGENES/Logo/capital-biker-logo.png' %}"
-                 class="logo-registro"
-                 alt="Capital Biker">
+            <img
+                src="{% static 'IMAGENES/Logo/capital-biker-logo.png' %}"
+                class="logo-registro"
+                alt="Capital Biker"
+            >
 
             <h2>Crear cuenta</h2>
 
@@ -46,63 +46,160 @@
                 favoritos y promociones.
             </p>
 
-            <form method="POST">
+
+            <form method="POST" id="registroForm">
 
                 {% csrf_token %}
 
+
+                <!-- ERRORES GENERALES -->
+                {% if form.non_field_errors %}
+
+                    <div class="mensaje-error">
+
+                        {% for error in form.non_field_errors %}
+
+                            <p>{{ error }}</p>
+
+                        {% endfor %}
+
+                    </div>
+
+                {% endif %}
+
+
+                <!-- NOMBRE -->
                 <div class="grupo">
 
-                    <label>Nombre completo</label>
+                    <label for="id_nombre">
+                        Nombre completo
+                    </label>
 
                     <input
                         type="text"
+                        id="id_nombre"
                         name="nombre"
                         placeholder="Tu nombre completo"
-                        required>
+                        value="{{ form.nombre.value|default:'' }}"
+                        required
+                    >
+
+                    {% if form.nombre.errors %}
+
+                        <div class="campo-error">
+
+                            {% for error in form.nombre.errors %}
+                                {{ error }}
+                            {% endfor %}
+
+                        </div>
+
+                    {% endif %}
 
                 </div>
 
+
+                <!-- CORREO -->
                 <div class="grupo">
 
-                    <label>Correo electrónico</label>
+                    <label for="id_email">
+                        Correo electrónico
+                    </label>
 
                     <input
                         type="email"
+                        id="id_email"
                         name="email"
                         placeholder="correo@ejemplo.com"
-                        required>
+                        value="{{ form.email.value|default:'' }}"
+                        required
+                    >
+
+                    {% if form.email.errors %}
+
+                        <div class="campo-error">
+
+                            {% for error in form.email.errors %}
+                                {{ error }}
+                            {% endfor %}
+
+                        </div>
+
+                    {% endif %}
 
                 </div>
 
+
+                <!-- CONTRASEÑA -->
                 <div class="grupo">
 
-                    <label>Contraseña</label>
+                    <label for="id_password1">
+                        Contraseña
+                    </label>
 
                     <input
                         type="password"
+                        id="id_password1"
                         name="password1"
                         placeholder="********"
-                        required>
+                        required
+                    >
+
+                    {% if form.password1.errors %}
+
+                        <div class="campo-error">
+
+                            {% for error in form.password1.errors %}
+                                {{ error }}
+                            {% endfor %}
+
+                        </div>
+
+                    {% endif %}
 
                 </div>
 
+
+                <!-- CONFIRMAR CONTRASEÑA -->
                 <div class="grupo">
 
-                    <label>Confirmar contraseña</label>
+                    <label for="id_password2">
+                        Confirmar contraseña
+                    </label>
 
                     <input
                         type="password"
+                        id="id_password2"
                         name="password2"
                         placeholder="********"
-                        required>
+                        required
+                    >
+
+                    {% if form.password2.errors %}
+
+                        <div class="campo-error">
+
+                            {% for error in form.password2.errors %}
+                                {{ error }}
+                            {% endfor %}
+
+                        </div>
+
+                    {% endif %}
 
                 </div>
 
+
+                <!-- TÉRMINOS -->
                 <div class="terminos">
 
                     <label>
 
-                        <input type="checkbox" required>
+                        <input
+                            type="checkbox"
+                            name="terminos"
+                            required
+                        >
 
                         Acepto términos y condiciones
 
@@ -110,9 +207,12 @@
 
                 </div>
 
+
+                <!-- BOTÓN -->
                 <button
                     type="submit"
-                    class="btn-registro">
+                    class="btn-registro"
+                >
 
                     Crear cuenta
 
@@ -120,37 +220,47 @@
 
             </form>
 
+
+            <!-- SEPARADOR -->
             <div class="separador">
 
                 <span>O continúa con</span>
 
             </div>
 
-            <button class="google-btn">
 
-                <img src="{% static 'IMAGENES/icons/google-icon.png' %}"
-                     alt="Google">
+            <!-- GOOGLE -->
+            <a
+                href="#"
+                class="google-btn"
+                id="googleLoginBtn"
+            >
+
+                <img
+                    src="{% static 'IMAGENES/icons/google-icon.png' %}"
+                    alt="Google"
+                >
 
                 <span>
-
                     Registrarse con Google
-
                 </span>
 
-            </button>
+            </a>
 
+
+            <!-- LOGIN -->
             <div class="login">
 
                 ¿Ya tienes una cuenta?
 
                 <a href="{% url 'usuarios:login' %}">
-
                     Ingresar
-
                 </a>
 
             </div>
 
+
+            <!-- VOLVER -->
             <div class="volver">
 
                 <a href="{% url 'home' %}">
@@ -169,42 +279,5 @@
 
 </section>
 
-
-<script>
-
-function mostrarPassword(id){
-
-let campo = document.getElementById(id);
-
-if(campo.type === "password"){
-    campo.type = "text";
-}
-else{
-    campo.type = "password";
-}
-
-}
-
-
-document.getElementById("registroForm").addEventListener("submit", function(e){
-
-let pass1 = document.getElementById("password").value;
-let pass2 = document.getElementById("password2").value;
-
-
-if(pass1 !== pass2){
-
-    e.preventDefault();
-
-    alert("Las contraseñas no coinciden");
-
-}
-
-});
-
-
-</script>
-
-
 {% endblock %}
-
+```
