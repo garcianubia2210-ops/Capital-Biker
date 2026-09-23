@@ -790,7 +790,7 @@ section {
             rgba(0, 0, 0, .55),
             rgba(0, 0, 0, .75)
         ),
-        url("../IMAGENES/login-bg.jpg");
+        none;
 
     background-size: cover;
 
@@ -1067,7 +1067,7 @@ section {
             rgba(0, 0, 0, .55),
             rgba(0, 0, 0, .75)
         ),
-        url("../IMAGENES/login-bg.jpg");
+        none;
 
     background-size: cover;
 
